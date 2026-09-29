@@ -1,0 +1,59 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
+public class poisk2 {
+    public static void main(String[] args) throws FileNotFoundException {
+        final int KOLVO = 1000;
+
+        Scanner scanner = new Scanner(
+                new File("C:\\Users\\Пользователь\\Downloads\\1111.txt")
+        );
+
+        int[] numbers = new int[KOLVO];
+        int min37 = 10001;
+        int max73 = 0;
+
+        for (int i = 0; i < KOLVO; i++) {
+            numbers[i] = scanner.nextInt();
+
+            if (numbers[i] % 37 == 0 && numbers[i] < min37) {
+                min37 = numbers[i];
+            }
+
+            if (numbers[i] % 73 == 0 && numbers[i] > max73) {
+                max73 = numbers[i];
+            }
+        }
+
+        int niz = Math.min(min37, max73);
+        int verh = Math.max(min37, max73);
+
+        int pary = 0;
+        int minSum = 100000;
+
+        for (int i = 0; i < KOLVO - 1; i++) {
+            boolean firstInside =
+                    numbers[i] > niz &&
+                    numbers[i] < verh;
+
+            boolean secondInside =
+                    numbers[i + 1] > niz &&
+                    numbers[i + 1] < verh;
+
+            if (firstInside != secondInside) {
+
+                pary++;
+
+                int sum = numbers[i] + numbers[i + 1];
+
+                if (sum < minSum) {
+                    minSum = sum;
+                }
+            }
+        }
+
+        System.out.println("Количество пар: " + pary);
+        System.out.println("Минимальная сумма: " + minSum);
+    }
+}
